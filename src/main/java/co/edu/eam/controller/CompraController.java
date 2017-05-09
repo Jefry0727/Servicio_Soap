@@ -10,6 +10,7 @@ import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.persistence.Query;
 
+import co.edu.eam.dto.ItemsDTO;
 import co.edu.eam.ejb.PersistenceManagerLocal;
 import co.edu.eam.model.Cliente;
 import co.edu.eam.model.Compra;
@@ -25,7 +26,7 @@ public class CompraController {
 	@WebMethod(action = "crearCompra", operationName = "operacionCrearCompra")
 	public boolean guardarCompra(@WebParam(name = "id_Cliente") int id,
 			@WebParam(name = "valor_total") double valor_total,
-			@WebParam(name = "items_compra") List<ItemCompra> items) {
+			@WebParam(name = "items_compra") List<ItemsDTO> items) {
 
 		try {
 
@@ -76,11 +77,16 @@ public class CompraController {
 			 */
 			compra = (Compra) query.getSingleResult();
 
-			for (ItemCompra itemCompra : items) {
+			for (ItemsDTO itemCompra : items) {
+				
+				ItemCompra compras = new ItemCompra();
+				
+				compras.setCantidad(Integer.parseInt(itemCompra.getCantidad()));
+				compras.setCompra(compra);
+				compras.setIdProducto(itemCompra.getIdProducto());
+				compras.setValorProducto(Double.parseDouble(itemCompra.getValorProducto()));
 
-				itemCompra.setCompra(compra);
-
-				persistencia.persist(itemCompra);
+				persistencia.persist(compras);
 
 			}
 

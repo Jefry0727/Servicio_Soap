@@ -26,7 +26,7 @@ public class ClienteController {
 	public boolean guardarCliente(@WebParam(name = "cliente") Cliente cliente){
 		try{
 			
-			cliente.setId(1);
+			//cliente.setId(1);
 			
 			persistencia.persist(cliente);
 			

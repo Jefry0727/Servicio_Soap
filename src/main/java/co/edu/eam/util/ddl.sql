@@ -26,3 +26,48 @@ CREATE TABLE item_compra
 ALTER TABLE item_compra ADD CONSTRAINT item_compra_PK PRIMARY KEY ( id ) ;
 ALTER TABLE compra ADD CONSTRAINT compra_cliente_FK FOREIGN KEY ( cliente_id ) REFERENCES cliente ( id ) ;
 ALTER TABLE item_compra ADD CONSTRAINT item_compra_compra_FK FOREIGN KEY ( compra_id ) REFERENCES compra ( id ) ;
+
+
+-- SECUENCIAS
+
+-- disparador para crear cliente
+
+  CREATE SEQUENCE ClienteSequencia;
+  
+  CREATE OR REPLACE FUNCTION ClienteFuncion()
+  RETURNS "trigger" AS
+$BODY$
+    BEGIN
+    New.id:=nextval('ClienteSequencia');
+    Return NEW;
+    END;
+ $BODY$
+  LANGUAGE 'plpgsql' VOLATILE;
+
+  CREATE TRIGGER ClienteTrigger
+  BEFORE INSERT
+  ON cliente
+  FOR EACH ROW
+  EXECUTE PROCEDURE ClienteFuncion();
+  
+  
+ -- disparador para compra 
+  
+  CREATE SEQUENCE CompraSequencia;
+  
+  CREATE OR REPLACE FUNCTION CompraFuncion()
+  RETURNS "trigger" AS
+$BODY$
+    BEGIN
+    New.id:=nextval('CompraSequencia');
+    Return NEW;
+    END;
+ $BODY$
+  LANGUAGE 'plpgsql' VOLATILE;
+
+  CREATE TRIGGER CompraTrigger
+  BEFORE INSERT
+  ON compra
+  FOR EACH ROW
+  EXECUTE PROCEDURE CompraFuncion();
+  
