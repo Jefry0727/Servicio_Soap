@@ -2,6 +2,7 @@ package co.edu.eam.controller;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -25,8 +26,7 @@ public class CompraController {
 
 	@WebMethod(action = "crearCompra", operationName = "operacionCrearCompra")
 	public boolean guardarCompra(@WebParam(name = "id_Cliente") int id,
-			@WebParam(name = "valor_total") double valor_total,
-			@WebParam(name = "items_compra") List<ItemsDTO> items) {
+			@WebParam(name = "valor_total") double valor_total, @WebParam(name = "items_compra") List<ItemsDTO> items) {
 
 		try {
 
@@ -66,7 +66,7 @@ public class CompraController {
 			compra.setFechaCompra(fecha);
 			compra.setValorTotal(valor_total);
 			compra.setNumeroCompra(num_compra);
-			// compra.setId(id);
+			compra.setId(1);
 
 			persistencia.persist(compra);
 
@@ -78,13 +78,14 @@ public class CompraController {
 			compra = (Compra) query.getSingleResult();
 
 			for (ItemsDTO itemCompra : items) {
-				
+
 				ItemCompra compras = new ItemCompra();
-				
+
 				compras.setCantidad(Integer.parseInt(itemCompra.getCantidad()));
 				compras.setCompra(compra);
 				compras.setIdProducto(itemCompra.getIdProducto());
 				compras.setValorProducto(Double.parseDouble(itemCompra.getValorProducto()));
+				compras.setId(generaId());
 
 				persistencia.persist(compras);
 
@@ -93,11 +94,16 @@ public class CompraController {
 			return true;
 
 		} catch (Exception e) {
-
+			e.printStackTrace();
 			return false;
 
 		}
 
+	}
+
+	public int generaId() {
+		Random r = new Random();
+		return (int) r.nextInt(9999);
 	}
 
 }

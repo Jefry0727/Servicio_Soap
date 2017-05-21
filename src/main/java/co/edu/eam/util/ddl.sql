@@ -71,3 +71,23 @@ $BODY$
   FOR EACH ROW
   EXECUTE PROCEDURE CompraFuncion();
   
+  
+  -- disparador itemcompra
+   CREATE SEQUENCE ItemSequencia;
+  
+  CREATE OR REPLACE FUNCTION ItemFuncion()
+  RETURNS "trigger" AS
+$BODY$
+    BEGIN
+    New.id:=nextval('ItemSequencia');
+    Return NEW;
+    END;
+ $BODY$
+  LANGUAGE 'plpgsql' VOLATILE;
+
+  CREATE TRIGGER CompraTrigger
+  BEFORE INSERT
+  ON item_compra
+  FOR EACH ROW
+  EXECUTE PROCEDURE ItemFuncion();
+  

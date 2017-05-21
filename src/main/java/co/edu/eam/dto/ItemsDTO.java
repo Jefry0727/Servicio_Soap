@@ -5,7 +5,7 @@ package co.edu.eam.dto;
 public class ItemsDTO {
 	
 	
-	private String id;
+	//private String id;
 
 	private String cantidad;
 
@@ -16,16 +16,16 @@ public class ItemsDTO {
 	/**
 	 * @return the id
 	 */
-	public String getId() {
-		return id;
-	}
+//	public String getId() {
+//		return id;
+//	}
 
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(String id) {
-		this.id = id;
-	}
+//	public void setId(String id) {
+//		this.id = id;
+//	}
 
 	/**
 	 * @return the cantidad
