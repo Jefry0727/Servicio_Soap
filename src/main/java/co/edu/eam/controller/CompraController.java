@@ -76,6 +76,11 @@ public class CompraController {
 			 * Compra obtenida en la busqueda
 			 */
 			compra = (Compra) query.getSingleResult();
+			
+//			System.out.println("valor");
+//			System.out.println(items.get(0).getValorProducto());
+//			System.out.println("sigue el for");
+			
 
 			for (ItemsDTO itemCompra : items) {
 
